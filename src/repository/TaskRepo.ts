@@ -1,3 +1,4 @@
+import NotFoundError from "../exceptions/NotFoundError";
 import Task from "../models/Task";
 
 interface ITaskRepo{
@@ -15,10 +16,12 @@ class TaskRepo implements ITaskRepo{
             })
     }
     async getAll(): Promise<Task[]> {
-        throw new Error("Method not implemented.");
+        return await Task.findAll()
     }
     async getById(id: number): Promise<Task> {
-        throw new Error("Method not implemented.");
+        const task = await Task.findByPk(id)
+        if(task) return task
+        else throw new NotFoundError(`Task with id ${id} was not found`)
     }
     async update(task: Task): Promise<void> {
         throw new Error("Method not implemented.");
