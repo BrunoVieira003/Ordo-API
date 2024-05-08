@@ -1,3 +1,4 @@
+import database from "../db";
 import NotFoundError from "../exceptions/NotFoundError";
 import Task from "../models/Task";
 
@@ -9,17 +10,17 @@ interface ITaskRepo{
 }
 
 class TaskRepo implements ITaskRepo{
+    private repo = database.getRepository(Task)
     async register(title: string) {
-        return await Task.create(
-            {
-                title: title
-            })
+        const newTask = this.repo.create({title: title})
+        await this.repo.save(newTask)
+        return newTask
     }
     async getAll(): Promise<Task[]> {
-        return await Task.findAll()
+        return await this.repo.find()
     }
     async getById(id: number): Promise<Task> {
-        const task = await Task.findByPk(id)
+        const task = await this.repo.findOneBy({id: id})
         if(task) return task
         else throw new NotFoundError(`Task with id ${id} was not found`)
     }

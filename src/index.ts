@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import InfoRoutes from './routes/InfoRouter';
@@ -14,12 +15,6 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Database
-(async ()=>{
-  const Task = require('./models/Task')
-  await database.sync()
-})();
 
 // Routes
 app.use(InfoRoutes)

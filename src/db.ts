@@ -1,14 +1,26 @@
-import { Sequelize } from "sequelize";
 import dotenv from 'dotenv'
+import { DataSource } from 'typeorm'
+import Task from './models/Task'
 
 dotenv.config()
 
-const sequelize = new Sequelize({
+const database = new DataSource({
+    type: 'postgres',
     host: process.env.DB_HOST,
-    dialect: 'postgres',
     database: process.env.DB_DATABASE,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
+    entities: [Task],
+    synchronize: true,
+    logging: true
 })
 
-export default sequelize
+database.initialize()
+    .then(() => {
+        console.log(`Data Source has been initialized`);
+    })
+    .catch((err) => {
+        console.error(`Data Source initialization error`, err);
+    })
+
+export default database

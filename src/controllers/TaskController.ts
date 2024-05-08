@@ -12,7 +12,7 @@ class TaskController{
                 status_code: 200,
                 message: "Succefully created task",
                 task: {
-                    title: task.dataValues.title
+                    title: task.title
                 }
             })
         }catch(error){
