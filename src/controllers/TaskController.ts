@@ -18,7 +18,7 @@ class TaskController{
         }catch(error){
             return res.status(500).send({
                 status_code: 500,
-                message: "Something went wrong with register",
+                message: "Something went wrong with register task",
             })
         }
     }
@@ -85,7 +85,30 @@ class TaskController{
             }else{
                 return res.status(500).send({
                     status_code: 500,
-                    message: "Something went wrong with getById task",
+                    message: "Something went wrong with update task",
+                })
+            }
+        }
+    }
+
+    async delete(req, res){
+        try{
+            const { taskId } = req.params
+            await TaskRepo.delete(taskId)
+            return res.status(200).send({
+                status_code: 200,
+                message: "Succefully deleted task",
+            })
+        }catch(error){
+            if(error instanceof NotFoundError){
+                return res.status(404).send({
+                    status_code: 404,
+                    message: error.message
+                })
+            }else{
+                return res.status(500).send({
+                    status_code: 500,
+                    message: "Something went wrong with delete task",
                 })
             }
         }
