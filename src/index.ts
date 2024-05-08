@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import InfoRoutes from './routes/InfoRouter';
 import TaskRoutes from './routes/TaskRouter';
 import cors from 'cors'
-import database from './db'
+import dataSource from './db'
 
 dotenv.config();
 

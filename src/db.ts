@@ -4,7 +4,7 @@ import Task from './models/Task'
 
 dotenv.config()
 
-const database = new DataSource({
+const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -15,7 +15,7 @@ const database = new DataSource({
     logging: true
 })
 
-database.initialize()
+dataSource.initialize()
     .then(() => {
         console.log(`Data Source has been initialized`);
     })
@@ -23,4 +23,4 @@ database.initialize()
         console.error(`Data Source initialization error`, err);
     })
 
-export default database
+export default dataSource

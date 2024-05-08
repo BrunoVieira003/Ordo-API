@@ -62,6 +62,34 @@ class TaskController{
             }
         }
     }
+
+    async update(req, res){
+        try{
+            const { taskId } = req.params
+            const { title } = req.body
+
+            const task = new Task()
+            task.id = taskId
+            task.title = title
+            await TaskRepo.update(task)
+            return res.status(200).send({
+                status_code: 200,
+                message: "Succefully updated task",
+            })
+        }catch(error){
+            if(error instanceof NotFoundError){
+                return res.status(404).send({
+                    status_code: 404,
+                    message: error.message
+                })
+            }else{
+                return res.status(500).send({
+                    status_code: 500,
+                    message: "Something went wrong with getById task",
+                })
+            }
+        }
+    }
 }
 
 export default new TaskController

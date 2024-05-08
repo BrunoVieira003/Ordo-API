@@ -1,4 +1,4 @@
-import database from "../db";
+import dataSource from "../db";
 import NotFoundError from "../exceptions/NotFoundError";
 import Task from "../models/Task";
 
@@ -10,7 +10,7 @@ interface ITaskRepo{
 }
 
 class TaskRepo implements ITaskRepo{
-    private repo = database.getRepository(Task)
+    private repo = dataSource.getRepository(Task)
     async register(title: string) {
         const newTask = this.repo.create({title: title})
         await this.repo.save(newTask)
@@ -25,7 +25,14 @@ class TaskRepo implements ITaskRepo{
         else throw new NotFoundError(`Task with id ${id} was not found`)
     }
     async update(task: Task): Promise<void> {
-        throw new Error("Method not implemented.");
+        const oldTask = await this.repo.findOneBy({id: task.id})
+
+        if(oldTask){
+            console.log(task)
+            await this.repo.update(task.id, task)
+        }else{
+            throw new NotFoundError(`Task with id ${task.id} was not found`)
+        }
     }
 }
 
