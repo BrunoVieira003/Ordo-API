@@ -10,10 +10,7 @@ class Task{
     @Column()
     title: string
 
-    @Column({
-        type: "string",
-        default: "finished"
-    })
+    @Column({default: "inactive"})
     status: TaskStatus
 
     @CreateDateColumn()

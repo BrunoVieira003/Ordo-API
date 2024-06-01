@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { DataSource } from 'typeorm'
-import Task from './models/Task'
+import { Task } from './models/Task'
 
 dotenv.config()
 
