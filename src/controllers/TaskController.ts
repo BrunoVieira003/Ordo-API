@@ -1,18 +1,19 @@
 import NotFoundError from "../exceptions/NotFoundError"
-import Task from "../models/Task"
+import { Task } from "../models/Task"
 import TaskRepo from "../repository/TaskRepo"
 
 class TaskController{
     async register(req, res){
-        const { title } = req.body
+        const { title, status } = req.body
 
         try{
-            const task = await TaskRepo.register(title)
+            const task = await TaskRepo.register(title, status)
             return res.status(200).send({
                 status_code: 200,
                 message: "Succefully created task",
                 task: {
-                    title: task.title
+                    title: task.title,
+                    status: task.status
                 }
             })
         }catch(error){
