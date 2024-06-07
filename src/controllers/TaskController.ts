@@ -8,16 +8,14 @@ class TaskController{
     async register(req: Request, res: Response){
         const { title } = req.body
         const status = req.body.status || 'pending'
+        const dueDate = req.body.dueDate && new Date(req.body.dueDate)
+        console.log(dueDate)
 
         try{
-            const task = await TaskRepo.register(title, status)
+            const task = await TaskRepo.register(title, status, dueDate)
             return res.status(StatusCodes.OK).send({
                 message: "Task created successfully",
-                data: {
-                    id: task.id,
-                    title: task.title,
-                    status: task.status
-                }
+                data: task
             })
         }catch(error){
             return res.status(StatusCodes.SERVER_ERROR).send({
@@ -64,25 +62,26 @@ class TaskController{
     async update(req: Request, res: Response){
         try{
             const { taskId } = req.params
-            const { title } = req.body
+            const { title, status, dueDate } = req.body
 
             const task = new Task()
             task.id = parseInt(taskId)
+            
             task.title = title
+            task.status = status
+            task.dueDate = dueDate
+
             await TaskRepo.update(task)
             return res.status(StatusCodes.OK).send({
-                code: StatusCodes.OK,
                 message: "Succefully updated task",
             })
         }catch(error){
             if(error instanceof NotFoundError){
                 return res.status(StatusCodes.NOT_FOUND).send({
-                    code: StatusCodes.NOT_FOUND,
                     message: error.message
                 })
             }else{
                 return res.status(StatusCodes.SERVER_ERROR).send({
-                    code: StatusCodes.SERVER_ERROR,
                     message: "Something went wrong when updating the task",
                 })
             }
@@ -94,18 +93,15 @@ class TaskController{
             const { taskId } = req.params
             await TaskRepo.delete(parseInt(taskId))
             return res.status(StatusCodes.OK).send({
-                code: StatusCodes.OK,
                 message: "Succefully deleted task",
             })
         }catch(error){
             if(error instanceof NotFoundError){
                 return res.status(StatusCodes.NOT_FOUND).send({
-                    code: StatusCodes.NOT_FOUND,
                     message: error.message
                 })
             }else{
                 return res.status(StatusCodes.SERVER_ERROR).send({
-                    code: StatusCodes.BAD_REQUEST,
                     message: "Something went wrong when deleting the task",
                 })
             }

@@ -13,6 +13,9 @@ class Task{
     @Column({default: "pending"})
     status: TaskStatus
 
+    @Column({nullable: true})
+    dueDate: Date | null
+
     @CreateDateColumn()
     created_at: Date
 

@@ -3,7 +3,7 @@ import NotFoundError from "../exceptions/NotFoundError";
 import { Task, TaskStatus } from "../models/Task";
 
 interface ITaskRepo{
-    register(title: string, status: TaskStatus): Promise<Task>
+    register(title: string, status: TaskStatus, dueDate?: Date): Promise<Task>
     getAll(): Promise<Task[]>
     getById(id: number): Promise<Task>
     update(task: Task): Promise<void>
@@ -12,10 +12,11 @@ interface ITaskRepo{
 
 class TaskRepo implements ITaskRepo{
     private repo = dataSource.getRepository(Task)
-    async register(title: string, status: TaskStatus) {
+    async register(title: string, status: TaskStatus, dueDate?: Date) {
         const newTask = this.repo.create({
             title: title,
-            status: status
+            status: status,
+            dueDate: dueDate
         })
         await this.repo.save(newTask)
         return newTask
