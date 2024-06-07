@@ -27,11 +27,16 @@ class UserRepo implements IUserRepo{
         return newUser
     }
 
-    getAll(): Promise<User[]> {
-        throw new Error("Method not implemented.");
+    async getAll(): Promise<User[]> {
+        return await this.repo.find({select: ['id', 'username', 'email', 'created_at', 'updated_at']})
     }
-    getById(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+    async getById(id: number): Promise<User> {
+        const user = await this.repo.findOneBy({id: id})
+        if(user){
+            delete user.password
+            return user
+        }
+        else throw new NotFoundError(`User with id ${id} not found`)
     }
     update(user: User): Promise<void> {
         throw new Error("Method not implemented.");

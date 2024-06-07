@@ -42,7 +42,7 @@ class TaskController{
             const { taskId } = req.params
             const task = await TaskRepo.getById(parseInt(taskId))
             return res.status(StatusCodes.OK).send({
-                message: "Successfully fetched tasks",
+                message: "Successfully fetched task",
                 data: task
             })
         }catch(error){
