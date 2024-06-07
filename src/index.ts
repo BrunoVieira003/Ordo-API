@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import InfoRoutes from './routes/InfoRouter';
+import UserRoutes from './routes/UserRouter'
 import TaskRoutes from './routes/TaskRouter';
 import cors from 'cors'
 import dataSource from './db'
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use(InfoRoutes)
+app.use(UserRoutes)
 app.use(TaskRoutes)
 
 app.listen(port, () => {

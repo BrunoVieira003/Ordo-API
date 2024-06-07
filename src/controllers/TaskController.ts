@@ -9,7 +9,6 @@ class TaskController{
         const { title } = req.body
         const status = req.body.status || 'pending'
         const dueDate = req.body.dueDate && new Date(req.body.dueDate)
-        console.log(dueDate)
 
         try{
             const task = await TaskRepo.register(title, status, dueDate)
