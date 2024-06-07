@@ -7,7 +7,7 @@ import { StatusCodes } from "../types/StatusCodes"
 class TaskController{
     async register(req: Request, res: Response){
         const { title } = req.body
-        const status = req.body.status || 'inactive'
+        const status = req.body.status || 'pending'
 
         try{
             const task = await TaskRepo.register(title, status)

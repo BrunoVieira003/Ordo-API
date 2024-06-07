@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
-type TaskStatus = "inactive" | "ongoing" | "finished"
+type TaskStatus = "pending" | "inprogress" | "completed" | "archived"
 
 @Entity()
 class Task{
@@ -10,7 +10,7 @@ class Task{
     @Column()
     title: string
 
-    @Column({default: "inactive"})
+    @Column({default: "pending"})
     status: TaskStatus
 
     @CreateDateColumn()
