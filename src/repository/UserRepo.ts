@@ -38,11 +38,23 @@ class UserRepo implements IUserRepo{
         }
         else throw new NotFoundError(`User with id ${id} not found`)
     }
-    update(user: User): Promise<void> {
-        throw new Error("Method not implemented.");
+    async update(user: User): Promise<void> {
+        const oldUser = await this.repo.findOneBy({id: user.id})
+
+        if(oldUser){
+            await this.repo.update(user.id, user)
+        }else{
+            throw new NotFoundError(`User with id ${user.id} not found`)
+        }
     }
-    delete(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<void> {
+        const oldUser = await this.repo.findOneBy({id: id})
+
+        if(oldUser){
+            await this.repo.delete(id)
+        }else{
+            throw new NotFoundError(`User with id ${id} not found`)
+        }
     }
 
 }
