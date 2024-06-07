@@ -28,7 +28,7 @@ class TaskRepo implements ITaskRepo{
     async getById(id: number): Promise<Task> {
         const task = await this.repo.findOneBy({id: id})
         if(task) return task
-        else throw new NotFoundError(`Task with id ${id} was not found`)
+        else throw new NotFoundError(`Task with id ${id} not found`)
     }
     
     async update(task: Task): Promise<void> {
@@ -38,7 +38,7 @@ class TaskRepo implements ITaskRepo{
             console.log(task)
             await this.repo.update(task.id, task)
         }else{
-            throw new NotFoundError(`Task with id ${task.id} was not found`)
+            throw new NotFoundError(`Task with id ${task.id} not found`)
         }
     }
 
@@ -48,7 +48,7 @@ class TaskRepo implements ITaskRepo{
         if(oldTask){
             await this.repo.delete(id)
         }else{
-            throw new NotFoundError(`Task with id ${id} was not found`)
+            throw new NotFoundError(`Task with id ${id} not found`)
         }
     }
 }

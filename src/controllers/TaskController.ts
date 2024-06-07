@@ -12,17 +12,16 @@ class TaskController{
         try{
             const task = await TaskRepo.register(title, status)
             return res.status(StatusCodes.OK).send({
-                code: StatusCodes.OK,
-                message: "Succefully created task",
-                task: {
+                message: "Task created successfully",
+                data: {
+                    id: task.id,
                     title: task.title,
                     status: task.status
                 }
             })
         }catch(error){
             return res.status(StatusCodes.SERVER_ERROR).send({
-                code: StatusCodes.SERVER_ERROR,
-                message: "Something went wrong with register task",
+                message: "Something went wrong when creating task",
             })
         }
     }
@@ -31,14 +30,12 @@ class TaskController{
         try{
             const tasks = await TaskRepo.getAll()
             return res.status(StatusCodes.OK).send({
-                code: StatusCodes.OK,
-                message: "Succefully fetched tasks",
-                tasks: tasks
+                message: "Successfully fetched tasks",
+                data: tasks
             })
         }catch(error){
             return res.status(StatusCodes.SERVER_ERROR).send({
-                code: StatusCodes.SERVER_ERROR,
-                message: "Something went wrong with getAll tasks",
+                message: "Something went wrong when fetching tasks",
             })
         }
     }
@@ -48,20 +45,17 @@ class TaskController{
             const { taskId } = req.params
             const task = await TaskRepo.getById(parseInt(taskId))
             return res.status(StatusCodes.OK).send({
-                code: StatusCodes.OK,
-                message: "Succefully fetched tasks",
-                task: task
+                message: "Successfully fetched tasks",
+                data: task
             })
         }catch(error){
             if(error instanceof NotFoundError){
                 return res.status(StatusCodes.NOT_FOUND).send({
-                    code: StatusCodes.NOT_FOUND,
                     message: error.message
                 })
             }else{
                 return res.status(StatusCodes.SERVER_ERROR).send({
-                    code: StatusCodes.SERVER_ERROR,
-                    message: "Something went wrong with getById task",
+                    message: "Something went wrong when fetching the task",
                 })
             }
         }
@@ -89,7 +83,7 @@ class TaskController{
             }else{
                 return res.status(StatusCodes.SERVER_ERROR).send({
                     code: StatusCodes.SERVER_ERROR,
-                    message: "Something went wrong with update task",
+                    message: "Something went wrong when updating the task",
                 })
             }
         }
@@ -112,7 +106,7 @@ class TaskController{
             }else{
                 return res.status(StatusCodes.SERVER_ERROR).send({
                     code: StatusCodes.BAD_REQUEST,
-                    message: "Something went wrong with delete task",
+                    message: "Something went wrong when deleting the task",
                 })
             }
         }
