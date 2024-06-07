@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use(InfoRoutes)
-app.use(UserRoutes)
-app.use(TaskRoutes)
+app.use('/users', UserRoutes)
+app.use('/tasks', TaskRoutes)
 
 app.listen(port, () => {
   console.log(`[server] Server is running at http://localhost:${port}`);

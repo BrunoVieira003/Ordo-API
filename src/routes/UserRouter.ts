@@ -3,10 +3,10 @@ import UserController from "../controllers/UserController";
 
 const router = Router()
 
-router.post("/users", UserController.register)
-router.get("/users", UserController.getAll)
-router.get("/users/:userId", UserController.getById)
-router.put("/users/:userId", UserController.update)
-router.delete("/users/:userId", UserController.delete)
+router.post("/", UserController.register)
+router.get("/", UserController.getAll)
+router.get("/:userId", UserController.getById)
+router.put("/:userId", UserController.update)
+router.delete("/:userId", UserController.delete)
 
 export default router
