@@ -1,0 +1,12 @@
+{
+	"Express Controller Method": {
+		"scope": "typescript",
+		"prefix": "controlM",
+		"body": [
+			"async ${1:method_name}(req: Request, res: Response){",
+			"\t$2",
+			"}"
+		],
+		"description": "Log output to console"
+	}
+}

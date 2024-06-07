@@ -1,11 +1,13 @@
+import { Request, Response } from "express"
 import NotFoundError from "../exceptions/NotFoundError"
 import { Task } from "../models/Task"
 import TaskRepo from "../repository/TaskRepo"
 import { StatusCodes } from "../types/StatusCodes"
 
 class TaskController{
-    async register(req, res){
-        const { title, status } = req.body
+    async register(req: Request, res: Response){
+        const { title } = req.body
+        const status = req.body.status || 'inactive'
 
         try{
             const task = await TaskRepo.register(title, status)
@@ -25,7 +27,7 @@ class TaskController{
         }
     }
 
-    async getAll(req, res){
+    async getAll(req: Request, res: Response){
         try{
             const tasks = await TaskRepo.getAll()
             return res.status(StatusCodes.OK).send({
@@ -41,7 +43,7 @@ class TaskController{
         }
     }
 
-    async getById(req, res){
+    async getById(req: Request, res: Response){
         try{
             const { taskId } = req.params
             const task = await TaskRepo.getById(parseInt(taskId))
@@ -65,13 +67,13 @@ class TaskController{
         }
     }
 
-    async update(req, res){
+    async update(req: Request, res: Response){
         try{
             const { taskId } = req.params
             const { title } = req.body
 
             const task = new Task()
-            task.id = taskId
+            task.id = parseInt(taskId)
             task.title = title
             await TaskRepo.update(task)
             return res.status(StatusCodes.OK).send({
@@ -93,10 +95,10 @@ class TaskController{
         }
     }
 
-    async delete(req, res){
+    async delete(req: Request, res: Response){
         try{
             const { taskId } = req.params
-            await TaskRepo.delete(taskId)
+            await TaskRepo.delete(parseInt(taskId))
             return res.status(StatusCodes.OK).send({
                 code: StatusCodes.OK,
                 message: "Succefully deleted task",
