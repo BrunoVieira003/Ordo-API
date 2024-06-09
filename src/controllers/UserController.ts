@@ -39,6 +39,7 @@ class UserController{
         try{
             const { userId } = req.params
             const user = await UserRepo.getById(parseInt(userId))
+            delete user.password
             return res.status(StatusCodes.OK).send({
                 message: "Successfully fetched user",
                 data: user

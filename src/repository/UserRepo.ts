@@ -30,14 +30,23 @@ class UserRepo implements IUserRepo{
     async getAll(): Promise<User[]> {
         return await this.repo.find({select: ['id', 'username', 'email', 'created_at', 'updated_at']})
     }
+
     async getById(id: number): Promise<User> {
         const user = await this.repo.findOneBy({id: id})
         if(user){
-            delete user.password
             return user
         }
         else throw new NotFoundError(`User with id ${id} not found`)
     }
+
+    async getByEmail(email: string): Promise<User> {
+        const user = await this.repo.findOneBy({email: email})
+        if(user){
+            return user
+        }
+        else throw new NotFoundError(`User with email ${email} not found`)
+    }
+
     async update(user: User): Promise<void> {
         const oldUser = await this.repo.findOneBy({id: user.id})
 
