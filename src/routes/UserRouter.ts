@@ -4,7 +4,7 @@ import auth from "../middlewares/auth";
 
 const router = Router()
 
-router.post("/", auth, UserController.register)
+router.post("/", UserController.register)
 router.get("/", UserController.getAll)
 router.get("/:userId", UserController.getById)
 router.put("/:userId", UserController.update)
