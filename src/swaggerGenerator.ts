@@ -6,22 +6,6 @@ const doc = {
         description: 'API for management of tasks and related entities'
     },
     host: 'localhost:8000',
-    definitions: {
-        User:{
-            id: 1,
-            username: 'John Doe',
-            email: 'johndoe@gmail.com',
-            password: '123',
-            created_at: new Date(),
-            updated_at: new Date(),
-        },
-        UserArray:[{$ref: '#/definitions/User'}],
-        AddUser:{
-            username: 'John Doe',
-            email: 'johndoe@gmail.com',
-            password: '123',
-        }
-    },
     components: {
         securitySchemes: {
             bearerAuth: {
@@ -33,7 +17,7 @@ const doc = {
     },
 };
 
-const outputFile = './swagger-output.json';
+const outputFile = './swagger.json';
 const routes = ['./index.ts'];
 
 swaggerAutogen({openapi: '3.0.0'})(outputFile, routes, doc);

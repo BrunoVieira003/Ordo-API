@@ -11,9 +11,6 @@ routes.use(InfoRoutes
 )
 routes.use('/users', UserRoutes
     /* #swagger.tags = ['User'] */
-    /* #swagger.responses[404] = {
-        message: 'User with id 1 not found'
-    } */
 )
 routes.use('/auth', AuthRoutes
     /* #swagger.tags = ['Auth'] */
