@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./dist/index.js",
+    "build": "npm run swagger && tsc",
     "dev": "nodemon ./src/index.ts",
     "test": "vitest",
     "swagger": "ts-node ./src/swaggerGenerator.ts"
