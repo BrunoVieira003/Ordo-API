@@ -11,7 +11,7 @@ export default function auth(req: RequestWithUser, res: Response, next: NextFunc
         const token = authHeader && authHeader.split(' ')[1]
 
         if(!token){
-            return res.status(StatusCodes.UNAUTHORIZED).send({ message: 'Authentication token is missing' })
+            return res.status(401).send({ message: 'Authentication token is missing' })
         }
 
         const decoded = verify(token, secret)
@@ -19,6 +19,6 @@ export default function auth(req: RequestWithUser, res: Response, next: NextFunc
         
         next()
     }catch(error){
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: "Bad Request" })
+        return res.status(400).json({ message: "Bad Request" })
     }
 }

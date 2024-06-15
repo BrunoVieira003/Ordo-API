@@ -10,12 +10,12 @@ class UserController{
 
         try{
             const user = await UserRepo.register(username, email, password)
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "User created successfully",
                 data: user
             })
         }catch(error){
-            return res.status(StatusCodes.SERVER_ERROR).send({
+            return res.status(500).send({
                 message: "Something went wrong when creating user",
             })
         }
@@ -24,12 +24,12 @@ class UserController{
     async getAll(req: Request, res: Response){
         try{
             const users = await UserRepo.getAll()
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Successfully fetched users",
                 data: users
             })
         }catch(error){
-            return res.status(StatusCodes.SERVER_ERROR).send({
+            return res.status(500).send({
                 message: "Something went wrong when fetching users",
             })
         }
@@ -40,17 +40,17 @@ class UserController{
             const { userId } = req.params
             const user = await UserRepo.getById(parseInt(userId))
             delete user.password
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Successfully fetched user",
                 data: user
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when fetching the user",
                 })
             }
@@ -69,16 +69,16 @@ class UserController{
             user.email = email
 
             await UserRepo.update(user)
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Succefully updated user",
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when updating the user",
                 })
             }
@@ -89,16 +89,16 @@ class UserController{
         try{
             const { userId } = req.params
             await UserRepo.delete(parseInt(userId))
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Succefully deleted user",
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when deleting the user",
                 })
             }

@@ -12,7 +12,7 @@ class AuthController{
             const user = await UserRepo.getByEmail(email)
             if(passwordMatches(password, user.password)){
                 const tokenData = generateToken({id: user.id})
-                return res.status(StatusCodes.OK).send({
+                return res.status(200).send({
                     message: "Successfully logged in",
                     data: tokenData
                 })
@@ -20,7 +20,7 @@ class AuthController{
 
         }catch(error){
             console.log(error)
-            return res.status(StatusCodes.UNAUTHORIZED).send({
+            return res.status(401).send({
                 message: "Email or password is invalid"
             })
         }

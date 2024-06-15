@@ -1,6 +1,7 @@
 import swaggerAutogen from 'swagger-autogen';
 
 const doc = {
+    openapi: '3.0.0',
     info: {
         title: 'Ordo API',
         description: 'API for management of tasks and related entities'
@@ -18,6 +19,6 @@ const doc = {
 };
 
 const outputFile = './swagger.json';
-const routes = ['./index.ts'];
+const routes = ['./routes/routes.ts'];
 
 swaggerAutogen({openapi: '3.0.0'})(outputFile, routes, doc);

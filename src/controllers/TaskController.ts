@@ -12,12 +12,12 @@ class TaskController{
 
         try{
             const task = await TaskRepo.register(title, status, dueDate)
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Task created successfully",
                 data: task
             })
         }catch(error){
-            return res.status(StatusCodes.SERVER_ERROR).send({
+            return res.status(500).send({
                 message: "Something went wrong when creating task",
             })
         }
@@ -26,12 +26,12 @@ class TaskController{
     async getAll(req: Request, res: Response){
         try{
             const tasks = await TaskRepo.getAll()
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Successfully fetched tasks",
                 data: tasks
             })
         }catch(error){
-            return res.status(StatusCodes.SERVER_ERROR).send({
+            return res.status(500).send({
                 message: "Something went wrong when fetching tasks",
             })
         }
@@ -41,17 +41,17 @@ class TaskController{
         try{
             const { taskId } = req.params
             const task = await TaskRepo.getById(parseInt(taskId))
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Successfully fetched task",
                 data: task
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when fetching the task",
                 })
             }
@@ -71,16 +71,16 @@ class TaskController{
             task.dueDate = dueDate
 
             await TaskRepo.update(task)
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Succefully updated task",
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when updating the task",
                 })
             }
@@ -91,16 +91,16 @@ class TaskController{
         try{
             const { taskId } = req.params
             await TaskRepo.delete(parseInt(taskId))
-            return res.status(StatusCodes.OK).send({
+            return res.status(200).send({
                 message: "Succefully deleted task",
             })
         }catch(error){
             if(error instanceof NotFoundError){
-                return res.status(StatusCodes.NOT_FOUND).send({
+                return res.status(404).send({
                     message: error.message
                 })
             }else{
-                return res.status(StatusCodes.SERVER_ERROR).send({
+                return res.status(500).send({
                     message: "Something went wrong when deleting the task",
                 })
             }
