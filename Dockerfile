@@ -1,7 +1,5 @@
 FROM node:19-alpine
 
-RUN npm prune --production
-
 WORKDIR /app
 
 COPY . .
