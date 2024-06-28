@@ -1,12 +1,14 @@
-FROM node:19-alpine
+FROM node:19-alpine as build
 
 WORKDIR /app
-
 COPY . .
-
-RUN npm install
+RUN npm ci
 RUN npm run build
 
-EXPOSE 5002
+FROM node:19-alpine
 
-CMD npm start
+EXPOSE 5002
+COPY --from=build /app/package.json /app/package-lock.json /app/dist ./
+RUN npm ci --production && npm clean cache --force
+
+CMD ["node", "dist/index.js"]
