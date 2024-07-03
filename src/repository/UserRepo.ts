@@ -1,7 +1,7 @@
 import dataSource from "../db";
 import NotFoundError from "../exceptions/NotFoundError";
 import { User } from "../models/User";
-import bcrypt from 'bcrypt'
+import bcryptjs from 'bcryptjs'
 
 interface IUserRepo{
     register(username: string, email: string, password: string): Promise<User>
@@ -15,7 +15,7 @@ class UserRepo implements IUserRepo{
     private repo = dataSource.getRepository(User)
 
     async register(username: string, email: string, password: string) {
-        const hashPassword = await bcrypt.hash(password, 10)
+        const hashPassword = await bcryptjs.hash(password, 10)
 
         const newUser = this.repo.create({
             username: username,
