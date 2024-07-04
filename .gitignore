@@ -2,5 +2,9 @@ server/node_modules/
 server/dist/
 server/.env
 
+client/node_modules/
+client/dist/
+client/.env
+
 .vscode
 server/src/swagger.json
