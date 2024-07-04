@@ -1,5 +1,6 @@
-/node_modules
-.env
+server/node_modules/
+server/dist/
+server/.env
+
 .vscode
-/src/swagger.json
-/dist
+server/src/swagger.json
