@@ -12,9 +12,11 @@ class AuthController{
             const user = await UserRepo.getByEmail(email)
             if(passwordMatches(password, user.password)){
                 const tokenData = generateToken({id: user.id})
+                delete user.password
                 return res.status(200).send({
                     message: "Successfully logged in",
-                    data: tokenData
+                    ...tokenData,
+                    user
                 })
             }
 
